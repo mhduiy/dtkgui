@@ -6,9 +6,6 @@
 #include "dplatformhandle.h"
 #include "dplatformtheme.h"
 #include "dwindowmanagerhelper.h"
-#ifndef DTK_DISABLE_TREELAND
-#include "wayland/personalizationwaylandclientextension.h"
-#endif
 #include <private/qwaylandwindow_p.h>
 #include <QtWaylandClient/private/qwaylandwindow_p.h>
 
@@ -623,11 +620,11 @@ public:
                 auto window = qobject_cast<QWindow *>(watched);
                 initWindowRadius(window);
 
-            #ifndef DTK_DISABLE_TREELAND
-                if (DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::IsWaylandPlatform) && PersonalizationManager::instance()->isSupported()) {
-                    PersonalizationManager::instance()->setEnableTitleBar(window, false);
-                }
-            #endif
+            // #ifndef DTK_DISABLE_TREELAND
+            //     if (DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::IsWaylandPlatform) && PersonalizationManager::instance()->isSupported()) {
+            //         PersonalizationManager::instance()->setEnableTitleBar(window, false);
+            //     }
+            // #endif
             deleteLater();
             }
         }
