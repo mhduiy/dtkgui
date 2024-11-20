@@ -1,22 +1,26 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2024 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
-#ifndef DPLATFORMTHEME_H
-#define DPLATFORMTHEME_H
-
-#include <DNativeSettings>
-#include <DPalette>
+#ifndef DPLATFORMINTERFACE_H
+#define DPLATFORMINTERFACE_H
 
 #include <QObject>
+#include <QVariant>
+#include <QWindow>
+
+#include <DPalette>
+#include <DObject>
+
+#include "dtkgui_global.h"
 
 DGUI_BEGIN_NAMESPACE
 
-class DPlatformThemePrivate;
-class DPlatformTheme : public DNativeSettings
+class DPlatformInterfacePrivate;
+class DPlatformInterface : public QObject, public DCORE_NAMESPACE::DObject
 {
     Q_OBJECT
-    D_DECLARE_PRIVATE(DPlatformTheme)
+    D_DECLARE_PRIVATE(DPlatformInterface)
 
     Q_PROPERTY(int cursorBlinkTime READ cursorBlinkTime WRITE setCursorBlinkTime NOTIFY cursorBlinkTimeChanged)
     Q_PROPERTY(int cursorBlinkTimeout READ cursorBlinkTimeout WRITE setCursorBlinkTimeout NOTIFY cursorBlinkTimeoutChanged)
@@ -72,122 +76,111 @@ class DPlatformTheme : public DNativeSettings
     Q_PROPERTY(int scrollBarPolicy READ scrollBarPolicy NOTIFY scrollBarPolicyChanged)
 
 public:
-    explicit DPlatformTheme(quint32 window, QObject *parent = nullptr);
-    DPlatformTheme(quint32 window, DPlatformTheme *parent);
-    ~DPlatformTheme();
+    explicit DPlatformInterface(QObject *parent);
+    virtual ~DPlatformInterface();
 
-    bool isValid() const;
-    DPlatformTheme *parentTheme() const;
-    void setFallbackProperty(bool fallback);
+    virtual int cursorBlinkTime() const;
+    virtual int cursorBlinkTimeout() const;
+    virtual bool cursorBlink() const;
+    virtual int doubleClickDistance() const;
+    virtual int doubleClickTime() const;
+    virtual int dndDragThreshold() const;
+    virtual int windowRadius() const;
+    virtual int windowRadius(int defaultValue) const;
+    virtual QByteArray themeName() const;
+    virtual QByteArray iconThemeName() const;
+    virtual QByteArray soundThemeName() const;
 
-    DPalette palette() const;
-    DPalette fetchPalette(const DPalette &base, bool *ok = nullptr) const;
-    void setPalette(const DPalette &palette);
+    virtual QByteArray fontName() const;
+    virtual QByteArray monoFontName() const;
+    virtual qreal fontPointSize() const;
+    virtual QByteArray gtkFontName() const;
 
-    int cursorBlinkTime() const;
-    int cursorBlinkTimeout() const;
-    bool cursorBlink() const;
-    int doubleClickDistance() const;
-    int doubleClickTime() const;
-    int dndDragThreshold() const;
-    int windowRadius() const;
-    int windowRadius(int defaultValue) const;
-    QByteArray themeName() const;
-    QByteArray iconThemeName() const;
-    QByteArray soundThemeName() const;
-
-    QByteArray fontName() const;
-    QByteArray monoFontName() const;
-    qreal fontPointSize() const;
-    QByteArray gtkFontName() const;
-
-    QColor activeColor() const;
-    QColor darkActiveColor() const;
-
-    bool isValidPalette() const;
+    virtual QColor activeColor() const;
+    virtual QColor darkActiveColor() const;
 
 #if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
-    QColor window() const;
-    QColor windowText() const;
-    QColor base() const;
-    QColor alternateBase() const;
-    QColor toolTipBase() const;
-    QColor toolTipText() const;
-    QColor text() const;
-    QColor button() const;
-    QColor buttonText() const;
-    QColor brightText() const;
-    QColor light() const;
-    QColor midlight() const;
-    QColor dark() const;
-    QColor mid() const;
-    QColor shadow() const;
-    QColor highlight() const;
-    QColor highlightedText() const;
-    QColor link() const;
-    QColor linkVisited() const;
-    QColor itemBackground() const;
-    QColor textTitle() const;
-    QColor textTips() const;
-    QColor textWarning() const;
-    QColor textLively() const;
-    QColor lightLively() const;
-    QColor darkLively() const;
-    QColor frameBorder() const;
+    virtual QColor window() const;
+    virtual QColor windowText() const;
+    virtual QColor base() const;
+    virtual QColor alternateBase() const;
+    virtual QColor toolTipBase() const;
+    virtual QColor toolTipText() const;
+    virtual QColor text() const;
+    virtual QColor button() const;
+    virtual QColor buttonText() const;
+    virtual QColor brightText() const;
+    virtual QColor light() const;
+    virtual QColor midlight() const;
+    virtual QColor dark() const;
+    virtual QColor mid() const;
+    virtual QColor shadow() const;
+    virtual QColor highlight() const;
+    virtual QColor highlightedText() const;
+    virtual QColor link() const;
+    virtual QColor linkVisited() const;
+    virtual QColor itemBackground() const;
+    virtual QColor textTitle() const;
+    virtual QColor textTips() const;
+    virtual QColor textWarning() const;
+    virtual QColor textLively() const;
+    virtual QColor lightLively() const;
+    virtual QColor darkLively() const;
+    virtual QColor frameBorder() const;
 #endif
 
-    int sizeMode() const;
-    int scrollBarPolicy() const;
+    virtual int sizeMode() const;
+    virtual int scrollBarPolicy() const;
 
 public Q_SLOTS:
-    void setCursorBlinkTime(int cursorBlinkTime);
-    void setCursorBlinkTimeout(int cursorBlinkTimeout);
-    void setCursorBlink(bool cursorBlink);
-    void setDoubleClickDistance(int doubleClickDistance);
-    void setDoubleClickTime(int doubleClickTime);
-    void setDndDragThreshold(int dndDragThreshold);
-    void setThemeName(const QByteArray &themeName);
-    void setIconThemeName(const QByteArray &iconThemeName);
-    void setSoundThemeName(const QByteArray &soundThemeName);
-    void setFontName(const QByteArray &fontName);
-    void setMonoFontName(const QByteArray &monoFontName);
-    void setFontPointSize(qreal fontPointSize);
-    void setGtkFontName(const QByteArray &fontName);
-    void setActiveColor(const QColor activeColor);
-    void setDarkActiveColor(const QColor &activeColor);
+    virtual void setCursorBlinkTime(int cursorBlinkTime);
+    virtual void setCursorBlinkTimeout(int cursorBlinkTimeout);
+    virtual void setCursorBlink(bool cursorBlink);
+    virtual void setDoubleClickDistance(int doubleClickDistance);
+    virtual void setDoubleClickTime(int doubleClickTime);
+    virtual void setDndDragThreshold(int dndDragThreshold);
+    virtual void setThemeName(const QByteArray &themeName);
+    virtual void setIconThemeName(const QByteArray &iconThemeName);
+    virtual void setSoundThemeName(const QByteArray &soundThemeName);
+    virtual void setFontName(const QByteArray &fontName);
+    virtual void setMonoFontName(const QByteArray &monoFontName);
+    virtual void setFontPointSize(qreal fontPointSize);
+    virtual void setGtkFontName(const QByteArray &fontName);
+    virtual void setActiveColor(const QColor activeColor);
+    virtual void setDarkActiveColor(const QColor &activeColor);
 #if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
-    void setWindow(const QColor &window);
-    void setWindowText(const QColor &windowText);
-    void setBase(const QColor &base);
-    void setAlternateBase(const QColor &alternateBase);
-    void setToolTipBase(const QColor &toolTipBase);
-    void setToolTipText(const QColor &toolTipText);
-    void setText(const QColor &text);
-    void setButton(const QColor &button);
-    void setButtonText(const QColor &buttonText);
-    void setBrightText(const QColor &brightText);
-    void setLight(const QColor &light);
-    void setMidlight(const QColor &midlight);
-    void setDark(const QColor &dark);
-    void setMid(const QColor &mid);
-    void setShadow(const QColor &shadow);
-    void setHighlight(const QColor &highlight);
-    void setHighlightedText(const QColor &highlightedText);
-    void setLink(const QColor &link);
-    void setLinkVisited(const QColor &linkVisited);
-    void setItemBackground(const QColor &itemBackground);
-    void setTextTitle(const QColor &textTitle);
-    void setTextTips(const QColor &textTips);
-    void setTextWarning(const QColor &textWarning);
-    void setTextLively(const QColor &textLively);
-    void setLightLively(const QColor &lightLively);
-    void setDarkLively(const QColor &darkLively);
-    void setFrameBorder(const QColor &frameBorder);
+    virtual void setWindow(const QColor &window);
+    virtual void setWindowText(const QColor &windowText);
+    virtual void setBase(const QColor &base);
+    virtual void setAlternateBase(const QColor &alternateBase);
+    virtual void setToolTipBase(const QColor &toolTipBase);
+    virtual void setToolTipText(const QColor &toolTipText);
+    virtual void setText(const QColor &text);
+    virtual void setButton(const QColor &button);
+    virtual void setButtonText(const QColor &buttonText);
+    virtual void setBrightText(const QColor &brightText);
+    virtual void setLight(const QColor &light);
+    virtual void setMidlight(const QColor &midlight);
+    virtual void setDark(const QColor &dark);
+    virtual void setMid(const QColor &mid);
+    virtual void setShadow(const QColor &shadow);
+    virtual void setHighlight(const QColor &highlight);
+    virtual void setHighlightedText(const QColor &highlightedText);
+    virtual void setLink(const QColor &link);
+    virtual void setLinkVisited(const QColor &linkVisited);
+    virtual void setItemBackground(const QColor &itemBackground);
+    virtual void setTextTitle(const QColor &textTitle);
+    virtual void setTextTips(const QColor &textTips);
+    virtual void setTextWarning(const QColor &textWarning);
+    virtual void setTextLively(const QColor &textLively);
+    virtual void setLightLively(const QColor &lightLively);
+    virtual void setDarkLively(const QColor &darkLively);
+    virtual void setFrameBorder(const QColor &frameBorder);
 #endif
 
-    int dotsPerInch(const QString &screenName = QString()) const;
-    void setDotsPerInch(const QString &screenName, int dpi);
-    void setWindowRadius(int windowRadius);
+    virtual int dotsPerInch(const QString &screenName = QString()) const;
+    virtual void setDotsPerInch(const QString &screenName, int dpi);
+    virtual void setWindowRadius(int windowRadius);
 
 Q_SIGNALS:
     void cursorBlinkTimeChanged(int cursorBlinkTime);
@@ -240,10 +233,9 @@ Q_SIGNALS:
     void sizeModeChanged(int sizeMode);
     void scrollBarPolicyChanged(int scrollBarPolicy);
 
-private:
-    friend class DPlatformThemePrivate;
+protected:
+    DPlatformInterface(DPlatformInterfacePrivate &dd, QObject *parent);
 };
 
 DGUI_END_NAMESPACE
-
-#endif // DPLATFORMTHEME_H
+#endif

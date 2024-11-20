@@ -6,9 +6,11 @@
 #include "dplatformhandle.h"
 #include "dplatformtheme.h"
 #include "dwindowmanagerhelper.h"
+
 #ifndef DTK_DISABLE_TREELAND
 #include "wayland/personalizationwaylandclientextension.h"
 #endif
+
 #include <private/qwaylandwindow_p.h>
 #include <QtWaylandClient/private/qwaylandwindow_p.h>
 
