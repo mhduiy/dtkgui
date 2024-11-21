@@ -5,7 +5,7 @@
 option(DTK_DISABLE_XCB "Disable XCB Protocols" OFF)
 
 # force disable, because we don't support Treeland
-option(DTK_DISABLE_TREELAND "Disable Treeland Protocols" ON)
+option(DTK_DISABLE_TREELAND "Disable Treeland Protocols" OFF)
 
 file(GLOB PLATFORM_INTERFACE_HEADER
     ${CMAKE_CURRENT_LIST_DIR}/*.h

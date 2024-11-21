@@ -28,6 +28,7 @@ class DPlatformTheme : public DNativeSettings
     Q_PROPERTY(QByteArray themeName READ themeName WRITE setThemeName NOTIFY themeNameChanged)
     Q_PROPERTY(QByteArray iconThemeName READ iconThemeName WRITE setIconThemeName NOTIFY iconThemeNameChanged)
     Q_PROPERTY(QByteArray soundThemeName READ soundThemeName WRITE setSoundThemeName NOTIFY soundThemeNameChanged)
+    Q_PROPERTY(QByteArray cursorThemeName READ cursorThemeName WRITE setCursorThemeName NOTIFY cursorThemeNameChanged)
     // Font
     Q_PROPERTY(QByteArray fontName READ fontName WRITE setFontName NOTIFY fontNameChanged)
     Q_PROPERTY(QByteArray monoFontName READ monoFontName WRITE setMonoFontName NOTIFY monoFontNameChanged)
@@ -95,6 +96,7 @@ public:
     QByteArray themeName() const;
     QByteArray iconThemeName() const;
     QByteArray soundThemeName() const;
+    QByteArray cursorThemeName() const;
 
     QByteArray fontName() const;
     QByteArray monoFontName() const;
@@ -149,6 +151,7 @@ public Q_SLOTS:
     void setThemeName(const QByteArray &themeName);
     void setIconThemeName(const QByteArray &iconThemeName);
     void setSoundThemeName(const QByteArray &soundThemeName);
+    void setCursorThemeName(const QByteArray &cursorThemeName);
     void setFontName(const QByteArray &fontName);
     void setMonoFontName(const QByteArray &monoFontName);
     void setFontPointSize(qreal fontPointSize);
@@ -199,6 +202,7 @@ Q_SIGNALS:
     void themeNameChanged(QByteArray themeName);
     void iconThemeNameChanged(QByteArray iconThemeName);
     void soundThemeNameChanged(QByteArray soundThemeName);
+    void cursorThemeNameChanged(QByteArray cursorThemeName);
     void fontNameChanged(QByteArray fontName);
     void monoFontNameChanged(QByteArray monoFontName);
     void fontPointSizeChanged(qreal fontPointSize);

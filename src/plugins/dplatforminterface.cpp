@@ -86,6 +86,11 @@ QByteArray DPlatformInterface::soundThemeName() const
     return {};
 }
 
+QByteArray DPlatformInterface::cursorThemeName() const
+{
+    return {};
+}
+
 QByteArray DPlatformInterface::fontName() const
 {
     return {};
@@ -309,6 +314,11 @@ void DPlatformInterface::setIconThemeName(const QByteArray &)
 }
 
 void DPlatformInterface::setSoundThemeName(const QByteArray &)
+{
+
+}
+
+void DPlatformInterface::setCursorThemeName(const QByteArray &)
 {
 
 }

@@ -32,6 +32,7 @@ class DPlatformInterface : public QObject, public DCORE_NAMESPACE::DObject
     Q_PROPERTY(QByteArray themeName READ themeName WRITE setThemeName NOTIFY themeNameChanged)
     Q_PROPERTY(QByteArray iconThemeName READ iconThemeName WRITE setIconThemeName NOTIFY iconThemeNameChanged)
     Q_PROPERTY(QByteArray soundThemeName READ soundThemeName WRITE setSoundThemeName NOTIFY soundThemeNameChanged)
+    Q_PROPERTY(QByteArray cursorThemeName READ cursorThemeName WRITE setCursorThemeName NOTIFY cursorThemeNameChanged)
     // Font
     Q_PROPERTY(QByteArray fontName READ fontName WRITE setFontName NOTIFY fontNameChanged)
     Q_PROPERTY(QByteArray monoFontName READ monoFontName WRITE setMonoFontName NOTIFY monoFontNameChanged)
@@ -90,6 +91,7 @@ public:
     virtual QByteArray themeName() const;
     virtual QByteArray iconThemeName() const;
     virtual QByteArray soundThemeName() const;
+    virtual QByteArray cursorThemeName() const;
 
     virtual QByteArray fontName() const;
     virtual QByteArray monoFontName() const;
@@ -142,6 +144,7 @@ public Q_SLOTS:
     virtual void setThemeName(const QByteArray &themeName);
     virtual void setIconThemeName(const QByteArray &iconThemeName);
     virtual void setSoundThemeName(const QByteArray &soundThemeName);
+    virtual void setCursorThemeName(const QByteArray &cursorThemeName);
     virtual void setFontName(const QByteArray &fontName);
     virtual void setMonoFontName(const QByteArray &monoFontName);
     virtual void setFontPointSize(qreal fontPointSize);
@@ -192,6 +195,7 @@ Q_SIGNALS:
     void themeNameChanged(QByteArray themeName);
     void iconThemeNameChanged(QByteArray iconThemeName);
     void soundThemeNameChanged(QByteArray soundThemeName);
+    void cursorThemeNameChanged(QByteArray soundThemeName);
     void fontNameChanged(QByteArray fontName);
     void monoFontNameChanged(QByteArray monoFontName);
     void fontPointSizeChanged(qreal fontPointSize);

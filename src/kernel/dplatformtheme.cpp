@@ -399,6 +399,12 @@ QByteArray DPlatformTheme::soundThemeName() const
     return d->platformInterface->soundThemeName();
 }
 
+QByteArray DPlatformTheme::cursorThemeName() const
+{
+    D_DC(DPlatformTheme);
+    return d->platformInterface->cursorThemeName();
+}
+
 QByteArray DPlatformTheme::fontName() const
 {
     D_DC(DPlatformTheme);
@@ -686,6 +692,12 @@ void DPlatformTheme::setSoundThemeName(const QByteArray &soundThemeName)
 {
     D_DC(DPlatformTheme);
     return d->platformInterface->setSoundThemeName(soundThemeName);
+}
+
+void DPlatformTheme::setCursorThemeName(const QByteArray &soundThemeName)
+{
+    D_DC(DPlatformTheme);
+    return d->platformInterface->setCursorThemeName(soundThemeName);
 }
 
 void DPlatformTheme::setFontName(const QByteArray &fontName)
