@@ -11,9 +11,7 @@
 #include "dplatformtheme.h"
 #include "dwindowmanagerhelper.h"
 #include "dvtablehook.h"
-#ifndef DTK_DISABLE_TREELAND
-#include "wayland/personalizationwaylandclientextension.h"
-#endif
+#include "private/dplatforminterface_p.h"
 #include <private/qwaylandwindow_p.h>
 #include <QtWaylandClient/private/qwaylandwindow_p.h>
 #include <dtkcore_global.h>
@@ -632,11 +630,13 @@ public:
                 initWindowRadius(window);
 
             #ifndef DTK_DISABLE_TREELAND
-                if (DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::IsWaylandPlatform) && PersonalizationManager::instance()->isSupported()) {
-                    PersonalizationManager::instance()->setEnableTitleBar(window, false);
+                if (DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::IsWaylandPlatform)) {
+                    DPlatformTheme *theme = DGuiApplicationHelper::instance()->applicationTheme();
+                    if (theme) {
+                        theme->platformInterface()->setEnabledNoTitlebarForWindow(window, true);
+                    }
                 }
             #endif
-            deleteLater();
             }
         }
         return QObject::eventFilter(watched, event);
@@ -1377,7 +1377,10 @@ void DPlatformHandle::setEnableBlurWindow(bool enableBlurWindow)
 {
 #ifndef DTK_DISABLE_TREELAND
     if (DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::IsWaylandPlatform)) {
-        PersonalizationManager::instance()->setEnableBlurWindow(m_window, enableBlurWindow);
+        DPlatformTheme *theme = DGuiApplicationHelper::instance()->applicationTheme();
+        if (theme) {
+            theme->platformInterface()->setEnabledNoTitlebarForWindow(m_window, true);
+        }
         return;
     }
 #endif

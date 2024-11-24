@@ -9,6 +9,8 @@
 #include "dplatformtheme.h"
 #include "dnativesettings_p.h"
 
+#include <DConfig>
+
 DGUI_BEGIN_NAMESPACE
 
 class DPlatformThemePrivate : public DNativeSettingsPrivate
@@ -34,8 +36,12 @@ public:
     DPalette *palette = nullptr;
     // 减少调色板changed信号的通知频率
     QTimer *notifyPaletteChangeTimer = nullptr;
+    Dtk::Core::DConfig *dtkPreferenceConfig;
 
     DPlatformInterface *platformInterface = nullptr;
+    
+public slots:
+    void onDtkPreferenceDConfigChanged(const QString &key);
 };
 
 DGUI_END_NAMESPACE

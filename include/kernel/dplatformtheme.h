@@ -13,6 +13,7 @@
 DGUI_BEGIN_NAMESPACE
 
 class DPlatformThemePrivate;
+class DPlatformInterface;
 class Q_DECL_DEPRECATED DPlatformTheme : public DNativeSettings
 {
     Q_OBJECT
@@ -188,6 +189,8 @@ public Q_SLOTS:
     int dotsPerInch(const QString &screenName = QString()) const;
     void setDotsPerInch(const QString &screenName, int dpi);
     void setWindowRadius(int windowRadius);
+
+    DPlatformInterface* platformInterface();
 
 Q_SIGNALS:
     void cursorBlinkTimeChanged(int cursorBlinkTime);

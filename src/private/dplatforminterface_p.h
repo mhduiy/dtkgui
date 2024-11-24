@@ -6,6 +6,7 @@
 #define DPLATFORMINTERFACE_H
 
 #include <QObject>
+#include <QWindow>
 
 #include "dtkgui_global.h"
 
@@ -120,6 +121,8 @@ public:
     virtual int dotsPerInch(const QString &screenName = QString()) const;
     virtual void setDotsPerInch(const QString &screenName, int dpi);
     virtual void setWindowRadius(int windowRadius);
+    virtual bool setEnabledNoTitlebarForWindow(QWindow *window, bool enable);
+    virtual void setEnableBlurWindowForWindow(QWindow *window, bool enable);
 
 protected:
     DPlatformTheme *m_platformTheme;

@@ -477,4 +477,15 @@ void DPlatformInterface::setWindowRadius(int)
 
 }
 
+bool DPlatformInterface::setEnabledNoTitlebarForWindow(QWindow *, bool)
+{
+    return false;
+}
+
+void DPlatformInterface::setEnableBlurWindowForWindow(QWindow *, bool)
+{
+
+}
+
+
 DGUI_END_NAMESPACE
