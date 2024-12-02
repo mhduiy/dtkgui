@@ -8,6 +8,7 @@
 #include "dtkgui_global.h"
 #include "dtreelandplatforminterface.h"
 #include <QObject>
+#include <QtWaylandClient/private/qwaylandwindow_p.h>
 
 DGUI_USE_NAMESPACE
 class DTreeLandPlatformWindowInterface : public QObject
@@ -19,7 +20,12 @@ public:
     bool setEnabledNoTitlebar(bool enable);
     void setEnableBlurWindow(bool enable);
     void doSetEnabledNoTitlebar();
+    void doSetEnabledBlurWindow();
     [[nodiscard]]QWindow *getWindow() const { return m_window; }
+
+private slots:
+    void onSurfaceCreated();
+    void onSurfaceDestroyed();
 
 private:
     PersonalizationWindowContext *getWindowContext();
@@ -31,6 +37,13 @@ private:
     PersonalizationManager *m_manager = nullptr;
     PersonalizationWindowContext *m_windowContext = nullptr;
     bool m_isNoTitlebar = true;
+    bool m_isWindowBlur = false;
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    QNativeInterface::Private::QWaylandWindow *m_waylandWindow = nullptr;
+#else
+    QtWaylandClient::QWaylandWindow *m_waylandWindow = nullptr;
+#endif
 };
 
 #endif // DTREELANDPLATFORMWINDOWINTERFACE_H
